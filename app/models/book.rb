@@ -1,6 +1,7 @@
 class Book < ApplicationRecord
 	belongs_to :user
 	has_many :favorites, dependent: :destroy
+	has_many :favorited_users, through: :favorites, source: :user
 	has_many :post_comments, dependent: :destroy
 	has_many :book_tags, dependent: :destroy
 	has_many :tags, through: :book_tags
@@ -21,7 +22,7 @@ class Book < ApplicationRecord
   scope :created_yesterday, -> {where(created_at: 1.day.ago.all_day)}
   scope :created_thisweek, -> {where(created_at: 6.day.ago.beginning_of_day..Time.zone.now.end_of_day)}
   scope :created_lastweek, -> {where(created_at: 2.week.ago.end_of_day..1.week.ago.end_of_day)}
-  
+
 	def self.looks(search, word)
     if search == "perfect_match"
       @book = Book.where("title LIKE?","#{word}")
@@ -39,13 +40,17 @@ class Book < ApplicationRecord
   def self.sort(selection)
     case selection
     when 'new'
-      return Book.all.order(created_at: :DESC)
+      return all.order(created_at: :DESC)
     when 'old'
-      return Book.all.order(created_at: :ASC)
+      return all.order(created_at: :ASC)
     when 'like'
-      return Book.all.order(rate: :DESC)
+      return all.order(rate: :DESC)
     when 'dislike'
-      return Book.all.order(rate: :ASC)
+      return all.order(rate: :ASC)
+    when 'rock'
+      return includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
+    when 'unrock'
+      return includes(:favorited_users).sort {|a,b| a.favorited_users.size <=> b.favorited_users.size}
     end
   end
 
