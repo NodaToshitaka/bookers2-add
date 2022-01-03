@@ -2,8 +2,6 @@ Rails.application.routes.draw do
   get 'chats/show'
   root 'homes#top'
   devise_for :users
-  get 'chat/id', to: 'chats#show', as: 'chat'
-  resoces :chats,only: [:create]
   get 'home/about' => 'homes#about'
   get 'search' => 'searches#search'
   get 'aline' => 'alines#aline'
@@ -19,6 +17,9 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
     resources :post_comments, only: [:create, :destroy]
   end
+  
+  get 'chat/:id', to: 'chats#show', as: 'chat'
+  resources :chats, only: [:create]
 
 
 end
