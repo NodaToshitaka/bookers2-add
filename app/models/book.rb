@@ -18,6 +18,8 @@ class Book < ApplicationRecord
     greater_than_or_equal_to: 1
   }, presence: true
 
+  is_impressionable counter_cache: true
+
   scope :created_today, -> {where(created_at: Time.zone.now.all_day)}
   scope :created_yesterday, -> {where(created_at: 1.day.ago.all_day)}
   scope :created_thisweek, -> {where(created_at: 6.day.ago.beginning_of_day..Time.zone.now.end_of_day)}
