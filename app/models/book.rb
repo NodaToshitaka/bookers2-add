@@ -5,6 +5,7 @@ class Book < ApplicationRecord
 	has_many :post_comments, dependent: :destroy
 	has_many :book_tags, dependent: :destroy
 	has_many :tags, through: :book_tags
+	has_many :sees, dependent: :destroy
 
 	def favorited_by?(user)
 		favorites.where(user_id: user.id).exists?
@@ -18,7 +19,6 @@ class Book < ApplicationRecord
     greater_than_or_equal_to: 1
   }, presence: true
 
-  is_impressionable counter_cache: true
 
   scope :created_today, -> {where(created_at: Time.zone.now.all_day)}
   scope :created_yesterday, -> {where(created_at: 1.day.ago.all_day)}

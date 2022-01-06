@@ -1,9 +1,12 @@
 class BooksController < ApplicationController
-  impressionist :actions=>[:show]
   def show
     @book = Book.find(params[:id])
     @post_comment = PostComment.new
-    impressionist(@book, nil, unique: [:session_hash.to_s])
+    @see = See.find_by(user_id: current_user.id, book_id: @book.id )
+    if @see.nil?
+      See.create(user_id: current_user.id, book_id: @book.id)
+    end
+
   end
 
   def index
