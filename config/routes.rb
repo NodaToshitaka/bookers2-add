@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
     resources :post_comments, only: [:create, :destroy]
   end
-  
+
+  resources :groups, only: [:new,:create, :show, :index, :edit, :update]
+
   get 'chat/:id', to: 'chats#show', as: 'chat'
   resources :chats, only: [:create]
 
