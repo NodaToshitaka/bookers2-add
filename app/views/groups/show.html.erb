@@ -1,0 +1,32 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-3'>
+
+    </div>
+    <div class='col-md-8 '>
+      <h2>Group Detail</h2>
+      <div class='card w-50 mx-auto mt-4 shadow-lg'>
+        <%= attachment_image_tag(@group, :image, fallback: "no-image-icon.jpg"), class:"card-img-top"; %>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-2">
+              <%= attachment_image_tag(@owner, :profile_image,fill, 60, 60, fallback: "no-image-icon.jpg"), class:"mt-3 rounded-circle"; %>
+              <%= link_to user_path(@owner) do %>
+                <p>OwnerName: <%= @owner.name %></p>
+              <% end %>
+            </div>
+            <div class="col-10">
+              <p class="card-title">
+                <strong><%= @group.name %></strong>
+              </p>
+              <p class="card-text">紹介文：<%= @group.intorduction %></p>
+              <% if current_user == @owner %>
+                <%= link_to edit_group_path(@group), "btn btn-outline-secondary btn-block fas fa-groupr-cog edit_group_#{@group.id}" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

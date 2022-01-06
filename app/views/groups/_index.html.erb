@@ -1,0 +1,30 @@
+<div class="card-list-container py-5">
+  <% @groups.each do |group| %>
+  <% @owner = User.find_by(id: group.owner.id) %>
+  <div class="card w-50 mx-auto mt-4 shadow-lg">
+    <%= link_to group_path(group) do %>
+      <%= attachment_image_tag group, :image, class:"card-img-top" %>
+    <% end %>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-2">
+          <%= attachment_image_tag @owner, :profile_image, fill, 60, 60, fallback: "no_image.jpg", class:"mt-3 rounded-circle"; %>
+          <%= link_to user_path(@owner) do %>
+            <p>OwnerName:<%= @owner.name %></p>
+          <% end %>
+        </div>
+        <div class="col-10">
+          <p class="card-title">
+            <%= link_to group_path(group) do %>
+              <strong><%= group.name %></strong>
+            <% end %>
+          </p>
+          <P class="card-text">
+             紹介文：<%= group.intorduction %>
+          </P>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
