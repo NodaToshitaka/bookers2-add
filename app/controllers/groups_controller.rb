@@ -15,9 +15,12 @@ class GroupsController < ApplicationController
   end
 
   def index
+    @book = Book.new
     @groups = Group.all
   end
+
   def show
+    @book = Book.new
     @group = Group.find(params[:id])
     @owner = User.find_by(id: @group.owner_id)
   end
@@ -29,7 +32,7 @@ class GroupsController < ApplicationController
 
   def update
     @group = Group.find(params[:id])
-    if @groupe.update(group_params)
+    if @group.update(group_params)
       redirect_to group_path(@group)
     else
       render :edit
@@ -39,6 +42,6 @@ class GroupsController < ApplicationController
   private
 
   def group_params
-    params.require(:group).permit(:name, :intorduction, :image_id)
+    params.require(:group).permit(:name, :introduction, :image)
   end
 end
