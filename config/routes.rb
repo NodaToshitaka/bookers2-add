@@ -18,7 +18,9 @@ Rails.application.routes.draw do
     resources :post_comments, only: [:create, :destroy]
   end
 
-  resources :groups, only: [:new,:create, :show, :index, :edit, :update]
+  resources :groups, only: [:new,:create, :show, :index, :edit, :update] do
+    resource :group_users, only: [:create, :destroy]
+  end
 
   get 'chat/:id', to: 'chats#show', as: 'chat'
   resources :chats, only: [:create]

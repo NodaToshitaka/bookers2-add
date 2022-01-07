@@ -22,6 +22,8 @@ class GroupsController < ApplicationController
   def show
     @book = Book.new
     @group = Group.find(params[:id])
+    @group_user = GroupUser.find_by(user_id: current_user.id, group_id: @group.id)
+    @users = @group.users
     @owner = User.find_by(id: @group.owner_id)
   end
 
