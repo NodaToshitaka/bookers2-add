@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   resources :groups, only: [:new,:create, :show, :index, :edit, :update] do
     resource :group_users, only: [:create, :destroy]
+    resources :event_notices, only: [:new, :create]
+    get "event_notices" => "event_notices#sent"
   end
 
   get 'chat/:id', to: 'chats#show', as: 'chat'
